@@ -22,6 +22,7 @@ javascript: (() => {
   }
   const branchName = `${branchType}/${issueNumber}-${issueTitle
     .toLocaleLowerCase()
+    .trim()
     .replace(/[åä]/g, "a")
     .replace(/[ö]/g, "o")
     .replace(/[^a-zA-Z ]/g, "")
