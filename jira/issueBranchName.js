@@ -25,7 +25,7 @@ javascript: (() => {
     .trim()
     .replace(/[åä]/g, "a")
     .replace(/[ö]/g, "o")
-    .replace(/[^a-zA-Z ]/g, "")
+    .replace(/[^a-z0-9\-\s]|\s(?=\-)|(?<=\-)\s/g, "")
     .replace(/ /g, "-")}`;
   navigator.clipboard.writeText(branchName).then(() => {
     console.log("Copied to clipboard: ", branchName);
