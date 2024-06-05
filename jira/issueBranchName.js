@@ -6,14 +6,14 @@ javascript: (() => {
   const issueNumber = document.querySelector(
     '[data-testid="issue.views.issue-base.foundation.breadcrumbs.current-issue.item"]'
   )?.children[0]?.textContent;
-  const severityTag = document.evaluate(
-    "//h2[text()=%27Severity%27]",
+  const isBug = document.evaluate(
+    "//*[contains(@data-testid, 'issue')]//img[contains(@alt, 'Bug')]",
     document,
     null,
     XPathResult.FIRST_ORDERED_NODE_TYPE,
     null
   ).singleNodeValue;
-  const branchType = severityTag ? "fix" : "feature";
+  const branchType = isBug ? "fix" : "feature";
   if (!issueNumber || !issueTitle) {
     alert(
       "No issue found. Make sure you are looking at a specific Jira issue."
