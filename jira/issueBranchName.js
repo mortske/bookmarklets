@@ -6,21 +6,25 @@ javascript: (() => {
   const issueNumber = document.querySelector(
     '[data-testid="issue.views.issue-base.foundation.breadcrumbs.current-issue.item"]'
   )?.children[0]?.textContent;
-  const isBug = document.evaluate(
-    "//*[contains(@data-testid, 'issue')]//img[contains(@alt, 'Bug')]",
-    document,
-    null,
-    XPathResult.FIRST_ORDERED_NODE_TYPE,
-    null
-  ).singleNodeValue;
-  const branchType = isBug ? "fix" : "feature";
+  const issueType = document.querySelector(
+    '[data-testid="issue-view-foundation.noneditable-issue-type.button"]'
+  )?.getAttribute("aria-label");
   if (!issueNumber || !issueTitle) {
     alert(
       "No issue found. Make sure you are looking at a specific Jira issue."
     );
     return;
   }
-  const branchName = `${branchType}/${issueNumber}-${issueTitle
+  const typeMap = {
+    "Feature":"feature",
+    "Story":"story",
+    "Sub-task":"task",
+    "Task":"tech",
+    "Bug":"bug",
+    "Incident":"bug",
+  };
+  const branchType = typeMap[issueType] ? `${typeMap[issueType]}/` : "";
+  const branchName = `${branchType}${issueNumber}-${issueTitle
     .toLocaleLowerCase()
     .trim()
     .replace(/[åä]/g, "a")
@@ -31,3 +35,5 @@ javascript: (() => {
     console.log("Copied to clipboard: ", branchName);
   });
 })();
+
+
